@@ -1,0 +1,79 @@
+<div class="flex justify-center items-center h-full">
+  <div class="registerContainer box-border px-6 py-16 border-2 border-grey-800 rounded-2xl shadow-xl">
+    <p class="text-2xl"> Welcome </p>
+    <p class="text-xs pb-4"> Create an account now </p>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <div class="flex">
+        <div class="mr-4">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="first_name" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="last_name" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Sex</mat-label>
+            <mat-select formControlName="sex">
+              <mat-option *ngFor="let sex of sexList" [value]="sex.value">
+                {{ sex.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Date of Birth</mat-label>
+            <input
+              matInput
+              [matDatepicker]="dp"
+              formControlName="date_of_birth"
+              readonly
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="dp" class="text-black"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              [type]="hidePassword ? 'password' : 'text'"
+              (input)="onPasswordInput()"
+            />
+            <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
+              hidePassword ? 'visibility_off' : 'visibility'
+            }}</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Confirm Password</mat-label>
+            <input
+              matInput
+              formControlName="repassword"
+              [type]="hideConfirmPassword ? 'password' : 'text'"
+              (input)="onPasswordInput()"
+            />
+            <mat-icon matSuffix (click)="hideConfirmPassword = !hideConfirmPassword">{{
+              hideConfirmPassword ? 'visibility_off' : 'visibility'
+            }}</mat-icon>
+            <mat-error
+              *ngIf="registerForm.controls.repassword.invalid && !registerForm.controls.repassword.hasError('required')"
+              >Password don't match</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+      <button mat-flat-button color="primary" class="w-full mb-5" type="submit"> SIGN UP </button>
+    </form>
+    <a routerLink="/login" class="text-xs hover:underline"> Already have an account </a>
+  </div>
+</div>

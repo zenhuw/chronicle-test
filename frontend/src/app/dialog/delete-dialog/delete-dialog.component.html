@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Delete User</h2>
+<mat-dialog-content class="mat-typography dialog">
+  <h4>Are you sure you want to delete this user ?</h4>
+  <h4><strong>Deleted data cannot be recovered, </strong>make sure you know what you are doing</h4>
+</mat-dialog-content>
+<mat-dialog-actions [align]="'end'">
+  <button mat-stroked-button mat-dialog-close> CANCEL </button>
+  <button mat-flat-button color="primary" (click)="deleteUser()"> DELETE </button>
+</mat-dialog-actions>

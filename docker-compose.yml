@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  rediscache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - "6380:6379"
+    command: redis-server --loglevel warning
+    volumes:
+      - cache:/data
+
+
+  mysqlchronicle:
+    image: mysql/mysql-server:latest
+    ports:
+      - "3310:3306"
+    volumes:
+      - db:/var/lib/mysql
+    command: --ssl=0 --default-authentication-plugin=caching_sha2_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=chronicle
+      - MYSQL_PASSWORD=chroniclepassword
+
+
+  backend:
+    restart: always
+    ports:
+      - "3001:3000"
+    expose:
+      - 3000
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - mysqlchronicle
+      - rediscache
+    environment:
+      - PORT=${PORT}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - SECRET_KEY=${SECRET_KEY}
+      - RATE_LIMIT_WINDOWMS=${RATE_LIMIT_WINDOWMS}
+      - RATE_LIMIT_MAX=${RATE_LIMIT_MAX}
+
+  frontend:
+    restart: always
+    ports:
+      - "8080:80"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+volumes:
+  cache:
+    driver: local
+  db:
+    driver: local

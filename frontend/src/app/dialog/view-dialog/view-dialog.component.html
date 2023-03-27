@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>User Information</h2>
+<mat-dialog-content class="mat-typography dialog">
+  <h5 class="label">Name</h5>
+  <h4>{{ data.first_name + ' ' + data.last_name }}</h4>
+  <h5 class="label">Sex</h5>
+  <h4>{{ data.sex === 'm' ? 'Male' : 'Female' }}</h4>
+  <h5 class="label">Date of Birth</h5>
+  <h4>{{ data.date_of_birth | date : 'dd-MM-yyyy' }}</h4>
+  <h5 class="label">Address</h5>
+  <h4>{{ data.address }}</h4>
+  <h5 class="label">Email</h5>
+  <h4>{{ data.email }}</h4>
+</mat-dialog-content>
+<mat-dialog-actions [align]="'end'">
+  <button mat-flat-button color="primary" mat-dialog-close> CLOSE </button>
+</mat-dialog-actions>

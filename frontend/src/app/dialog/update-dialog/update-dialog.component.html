@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Update User</h2>
+<form [formGroup]="updateForm" (ngSubmit)="updateUser()">
+  <mat-dialog-content class="mat-typography dialog">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>First name</mat-label>
+      <input matInput formControlName="first_name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Last name</mat-label>
+      <input matInput formControlName="last_name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Sex</mat-label>
+      <mat-select formControlName="sex">
+        <mat-option *ngFor="let sex of sexList" [value]="sex.value">
+          {{ sex.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Date of birth</mat-label>
+      <input matInput formControlName="date_of_birth" [matDatepicker]="dp" readonly />
+      <mat-datepicker-toggle matIconSuffix [for]="dp" class="text-black"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address" />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions [align]="'end'">
+    <button mat-stroked-button mat-dialog-close> CANCEL </button>
+    <button mat-flat-button color="primary" type="submit"> SAVE </button>
+  </mat-dialog-actions>
+</form>

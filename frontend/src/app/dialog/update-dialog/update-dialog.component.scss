@@ -1,0 +1,6 @@
+.dialog {
+    width: 500px;
+}
+::ng-deep .mdc-notched-outline__notch {
+  border-right: none !important;
+}
